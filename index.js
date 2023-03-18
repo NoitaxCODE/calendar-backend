@@ -1,7 +1,8 @@
 const express = require('express');
 const { dbConnection } = require('./database/config');
 require('dotenv').config();
-const cors = require('cors')
+const cors = require('cors');
+const morgan = require('morgan');
 
 //Crear el servidor de express
 const app = express();
@@ -19,6 +20,7 @@ app.use( express.static('public') );
 app.use( express.json() );
 
 //Rutas
+app.use(morgan('dev'));
 app.use( '/api/auth', require('./routes/auth') );
 app.use( '/api/events', require('./routes/events') );
 // TODO: CRUD: Eventos
@@ -28,5 +30,3 @@ app.use( '/api/events', require('./routes/events') );
 app.listen( process.env.PORT, ()=>{
   console.log(`Servidor corriendo en puerto ${ process.env.PORT }`)
 });
-
-console.log("Probando redeploy")
